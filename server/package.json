@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mongodb": "^5.2.0"
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for ecommerce application for CENG495",
+  "main": "index.js",
+  "author": "ilkerkosaroglu",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "typescript": "^5.0.4"
+  }
+}
