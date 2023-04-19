@@ -1,1 +1,13 @@
 ts+node for server: https://khalilstemmler.com/blogs/typescript/node-starter-project/
+
+
+
+knowhow
+
+oauth2 https://auth0.com/intro-to-iam/what-is-oauth-2
+
+axios https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/#why
+
+ssl https://www.godaddy.com/garage/enable-https-server/
+
+CA https://letsencrypt.org/getting-started/
