@@ -1,5 +1,5 @@
 import React from 'react';
-type CardProps = {
+export type ProductProps = {
     title: string;
     description: string;
     price: number;
@@ -7,14 +7,14 @@ type CardProps = {
     image: string;
     otherProps?: {[key: string]: string};
 };
-export const CardComponent = (props: CardProps) => {
+export const CardComponent = (props: ProductProps) => {
     return (
-        <div className="card" style={{border:'medium solid black'}}>
+        <div className="card" style={{border:'medium solid black', width:'50vw', height:'auto'}}>
             <img src={props.image} alt="Avatar" style={{width: "100%"}} />
             <div className="container">
                 <h4><b>{props.title}</b></h4>
                 <p>{props.description}</p>
-                <p><i>{props.price}$</i></p>
+                <p><i>{props.price}TL</i></p>
                 <p>Seller: {props.seller}</p>
                 {props.otherProps &&<span>
                     <hr />

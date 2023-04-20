@@ -5,3 +5,11 @@ export const ErrorPage = () => {
     </div>
   );
 };
+
+export const ErrorProductPage = () => {
+  return (
+    <div>
+      <h1>Something went wrong loading the products..</h1>
+    </div>
+  );
+};
