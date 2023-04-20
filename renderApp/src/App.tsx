@@ -1,19 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { Root, loader as RootLoader } from './Root';
+import { ErrorPage } from './ErrorPage';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    loader: RootLoader,
+    errorElement: <ErrorPage />,
+  },
+]);
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <button onClick={() => {
-          
-        }}>Click Me</button>
-      </header>
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
     </div>
   );
 }
