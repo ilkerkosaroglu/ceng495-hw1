@@ -1,6 +1,8 @@
 ts+node for server: https://khalilstemmler.com/blogs/typescript/node-starter-project/
 
 
+param routing. url'de param olsun, kategoriler için.
+
 
 knowhow
 
