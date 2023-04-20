@@ -3,6 +3,14 @@ ts+node for server: https://khalilstemmler.com/blogs/typescript/node-starter-pro
 
 param routing. url'de param olsun, kategoriler için.
 
+proper authorization? proper nasıl oluyor
+
+number of reviewers: sanırım rate'leyenlerin sayısı.
+
+
+avg: https://stackoverflow.com/questions/64195622/how-to-calculate-average-rating-of-my-product-in-mongodb
+
+this is better for avg: https://www.mongodb.com/community/forums/t/schema-design-for-ratings-system/8891/2
 
 knowhow
 
