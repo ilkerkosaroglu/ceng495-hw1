@@ -40,7 +40,7 @@ router.get('/:productId', async (req, res) => {
     const coll = mongoClient.db('ec').collection('products');
     const productWithReviews = coll.aggregate(agg(req.params.productId));
     const result = await productWithReviews.toArray();
-    return res.send(result);
+    return res.send(result[0]);
 });
 
 export default router;

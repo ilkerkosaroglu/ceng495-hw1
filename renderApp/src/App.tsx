@@ -5,6 +5,7 @@ import { ErrorPage, ErrorProductPage } from './ErrorPage';
 import { ProductsComponent, loader as productsLoader } from './pages/productsPage';
 import { Root, loader as rootLoader } from './Root';
 import { CategoriesComponent, loader as categoriesLoader } from './Categories';
+import { ReviewPropsComponent, loader as productInfoLoader } from './pages/reviewComponent';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,13 @@ const router = createBrowserRouter([
             element: <ProductsComponent/>,
             loader: productsLoader,
             errorElement: <ErrorProductPage />,
+            children: [
+              {
+                path: ":productId",
+                element: <ReviewPropsComponent/>,
+                loader: productInfoLoader,
+              },
+            ],
           },
         ],
       },
