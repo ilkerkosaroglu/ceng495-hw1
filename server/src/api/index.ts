@@ -1,6 +1,7 @@
 import express from 'express';
 import {mongoClient} from '../mongo/connection';
 import productsRouter from './productsRouter';
+import productInfoRouter from './productInfoRouter';
 const router = express.Router();
 
 const agg = [
@@ -24,6 +25,8 @@ router.get('/categories', async (_, res) => {
 });
 
 router.use('/products', productsRouter);
+
+router.use('/productInfo', productInfoRouter);
 
 router.use((_, res) => {
     res.status(403).send({
