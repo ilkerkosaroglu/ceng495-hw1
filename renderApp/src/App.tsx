@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import { Root, loader as rootLoader } from './Root';
 import { ErrorPage, ErrorProductPage } from './ErrorPage';
 import { ProductsComponent, loader as productsLoader } from './pages/productsPage';
+import { Root, loader as rootLoader } from './Root';
+import { CategoriesComponent, loader as categoriesLoader } from './Categories';
 
 const router = createBrowserRouter([
   {
@@ -12,11 +13,18 @@ const router = createBrowserRouter([
     loader: rootLoader,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: ":category",
-        element: <ProductsComponent/>,
-        loader: productsLoader,
-        errorElement: <ErrorProductPage />,
+      { path: "/", 
+        element: <CategoriesComponent />, 
+        loader: categoriesLoader, 
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: ":category",
+            element: <ProductsComponent/>,
+            loader: productsLoader,
+            errorElement: <ErrorProductPage />,
+          },
+        ],
       },
     ],
   },

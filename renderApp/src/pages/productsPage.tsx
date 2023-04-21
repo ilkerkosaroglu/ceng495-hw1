@@ -18,7 +18,7 @@ export const ProductsComponent = () => {
             <h1>Products</h1>
             <div style={{display:'flex'}}>
                 {products.map((product) => (
-                    <CardComponent key={product.title} {...product} />
+                    <CardComponent key={product.name} {...product} />
                 ))}
             </div>
         </div>
