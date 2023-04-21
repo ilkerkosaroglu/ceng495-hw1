@@ -4,7 +4,7 @@ export const loader = () =>{
 };
 export const Root = () => {
     return (
-        <div>
+        <div style={{height: '100%'}}>
             <h1>Root</h1>
             <Outlet/>
         </div>

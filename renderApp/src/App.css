@@ -43,6 +43,34 @@
 
 
 .container{
-  background-color: aliceblue;
-  height: max-content;
+  /* background-color: aliceblue; */
+  /* height: max-content; */
+}
+
+.light{
+  font-weight: lighter;
+}
+
+.titleText{
+  text-align: left;
+  padding-left: 20px;
+}
+
+.white{
+  color: white;
+}
+
+.darkLink{
+  color: #61dafb;
+  width: 100%;
+}
+
+.darkLink:hover{
+  color: #61dafb;
+}
+.darkLink:active{
+  color: #61dafb;
+}
+.darkLink:visited{
+  color: #61dafb;
 }

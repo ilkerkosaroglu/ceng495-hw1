@@ -1,18 +1,30 @@
 import React from 'react';
 import { Card, Classes } from "@blueprintjs/core";
+import { capitalizeFirstLetter } from '../util';
+const knownProps = ['_id', 'category', 'name', 'description', 'price', 'image', 'seller'];
 export type ProductProps = {
     name: string;
     description: string;
     price: number;
-    seller: string;
     image: string;
-    otherProps?: {[key: string]: string};
+    seller: string;
 };
 // border:'medium solid black', 
+const PropsComponent = (obj: Object) => {
+    return (
+        <div>
+            {Object.entries(obj).map(([key, v]) => {
+                if(knownProps.includes(key)) return null;
+                if(typeof v === 'object' && v !== null) return <PropsComponent key={key} {...v} />;
+                return <p key={key}>{capitalizeFirstLetter(key)}: {v}</p>;
+            })}
+        </div>
+    );
+};
 export const CardComponent = (props: ProductProps) => {
     const [isLoaded, setIsLoaded] = React.useState(false);
     return (
-        <Card style={{width:'25vw', height:'auto'}}>
+        <Card interactive style={{width:'25vw', height:'auto', margin:'5px'}}>
             <div className={!isLoaded?Classes.SKELETON:''}>
                 <img src={props.image} alt="Avatar" 
                 onLoad={() => setIsLoaded(true)}
@@ -21,18 +33,11 @@ export const CardComponent = (props: ProductProps) => {
             <div className={(!isLoaded?Classes.SKELETON:'') + " container"}>
                 <h4><b>{props.name}</b></h4>
                 <p>{props.description}</p>
-                <p><i>{props.price}TL</i></p>
-                <p>Seller: {props.seller}</p>
-                {props.otherProps &&<span>
-                    <hr />
-                    <p>Other props:</p>
-                    <ul>
-                        {Object.keys(props.otherProps).map((key) => {
-                            return <li key={key}>{key}: {props.otherProps![key]}</li>;
-                        })}
-                    </ul>
-                </span>
-                }
+                <p className="light"><b><i>{props.price}TL</i></b></p>
+                <hr/>
+                    <PropsComponent {...props}/>
+                <hr/>
+                <p className="light">Seller: {props.seller}</p>
             </div>
         </Card>
     );

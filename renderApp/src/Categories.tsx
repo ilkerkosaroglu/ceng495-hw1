@@ -1,8 +1,8 @@
 import React from 'react';
-import { useLoaderData, LoaderFunction, Link, Outlet } from 'react-router-dom';
+import { useLoaderData, LoaderFunction, Link, Outlet, useNavigate } from 'react-router-dom';
 import { LoaderData } from './routerTypes';
 import axios from 'axios';
-
+import { Button, Classes } from '@blueprintjs/core';
 type Category = {
     name: string;
     count: number;
@@ -17,19 +17,28 @@ export const loader = (async () =>
     })) satisfies LoaderFunction;
 
 export const CategoriesComponent = () => {
+    let navigate = useNavigate();
     const categories = useLoaderData() as LoaderData<typeof loader>;
     if(!categories) return (<div>Loading...</div>);
     return (
-        <div style={{display:'flex'}}>
-            <div style={{backgroundColor:'ghostwhite'}}>
-                <h1>Categories</h1>
-                <ul>
+        <div style={{display:'flex', height:'100%'}}>
+            <div style={{backgroundColor:'#2e2e3c', padding:'0px 22px',borderRight:'gray solid 1px', textAlign:'initial'}}>
+                <h1 className='white'>Categories</h1>
+                <div className={Classes.DARK}>
+
                     {categories.map((category) => (
-                        <li key={category.name}>
-                            <Link to={category.name}>{category.name} ({category.count})</Link>
-                        </li>
+                        <Button
+                        fill
+                        minimal
+                        onClick={() => {
+                            navigate(category.name);
+                        }}
+                        key={category.name}>
+                            {category.name} ({category.count})
+                            <Link  to={category.name}></Link>
+                        </Button>
                     ))}
-                </ul>
+                </div>
             </div>
             <Outlet />
         </div>

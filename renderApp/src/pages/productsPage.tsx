@@ -14,9 +14,9 @@ export const loader = (async ({ params }) =>
 export const ProductsComponent = () => {
     const products = useLoaderData() as LoaderData<typeof loader>;
     return (
-        <div>
-            <h1>Products</h1>
-            <div style={{display:'flex'}}>
+        <div style={{backgroundColor: '#f2f3ee', padding:'0px 20px 20px 20px'}}>
+            <h1 className='titleText'>Products</h1>
+            <div style={{display:'flex', flexWrap:'wrap'}}>
                 {products.map((product) => (
                     <CardComponent key={product.name} {...product} />
                 ))}
