@@ -5,6 +5,10 @@ import { capitalizeFirstLetter } from '../util';
 
 const knownProps = ['_id', 'category', 'name', 'description', 'price', 'image', 'seller'];
 
+const shouldRenderExtraProps = (obj: Object) => {
+    return Object.keys(obj).some(key => !knownProps.includes(key));
+};
+
 const PropsComponent = (obj: Object) => {
     return (
         <div>
@@ -17,9 +21,10 @@ const PropsComponent = (obj: Object) => {
     );
 };
 
-export const ProductInfoComponent = (props: {product:ProductProps}) => {
+export const ProductInfoComponent = (props: {product:ProductProps, noText?:boolean}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const {product} = props;
+    const shouldRenderExtra = shouldRenderExtraProps(product);
     return (
         <div>
             <div className={!isLoaded?Classes.SKELETON:''}>
@@ -29,12 +34,12 @@ export const ProductInfoComponent = (props: {product:ProductProps}) => {
             </div>
 
             <div className={(!isLoaded?Classes.SKELETON:'') + " container"}>
-                <h4><b>{product.name}</b></h4>
+                 {!props.noText&&(<h4><b>{product.name}</b></h4>)}
                 <p>{product.description}</p>
                 <p className="light"><b><i>{product.price}TL</i></b></p>
-                <hr/>
+                {shouldRenderExtra && <div><hr/>
                     <PropsComponent {...product}/>
-                <hr/>
+                <hr/></div>}
                 <p className="light">Seller: {product.seller}</p>
             </div>
         </div>
