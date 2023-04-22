@@ -11,7 +11,7 @@ const ReviewCardComponent = (props:{review: ReviewProps}) => {
         <Card style={{margin:'10px'}}>
             <h4 style={{margin:'10px 0'}}><b>{review.username}</b></h4>
             {/* <hr/> */}
-            {review.rating!=null && <Rate value={review.rating}/>}
+            {review.rating!=null && <Rate disabled value={review.rating}/>}
             {review.comment!=null && <p style={{marginTop:'5px'}}>{review.comment}</p>}
         </Card>
     );
@@ -24,7 +24,8 @@ export const ReviewPropsComponent = (props:{productInfo: ProductInfo}) => {
             {productInfo.reviews.length > 0 ? <>
                 <hr/>
                 <h2>Reviews: {productInfo.reviews.length}</h2>
-                {/* <h4>Average Rating: ({props.averageRating})</h4> */}
+                <h4>Average Rating: ({productInfo.avgRating}/5)</h4>
+                <Rate value={productInfo.avgRating} allowHalf disabled/>
                 {productInfo.reviews.map((review) => <ReviewCardComponent key={review.username} review={review}/>)}
             </>:<h2>No reviews yet</h2>}
         </div>

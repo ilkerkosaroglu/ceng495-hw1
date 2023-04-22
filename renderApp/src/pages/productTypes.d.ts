@@ -9,6 +9,7 @@ export interface ProductProps {
 
 export interface ProductInfo extends ProductProps {
     reviews: ReviewProps[];
+    avgRating: number;
 };
 
 export type ReviewProps = {

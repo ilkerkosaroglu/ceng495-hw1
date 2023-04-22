@@ -35,6 +35,14 @@ const agg = (id:string)=>[
         ],
       },
   },
+    {
+    $addFields:
+      {
+        avgRating: {
+          $avg: "$reviews.rating",
+        },
+      },
+  },
 ];
 router.get('/:productId', async (req, res) => {
     const coll = mongoClient.db('ec').collection('products');
