@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData, LoaderFunction, Link, Outlet, useNavigate } from 'react-router-dom';
+import { useLoaderData, LoaderFunction, Link, Outlet, useNavigate, NavigateFunction, useMatch } from 'react-router-dom';
 import { LoaderData } from './routerTypes';
 import axios from 'axios';
 import { Alignment, Button, Classes } from '@blueprintjs/core';
@@ -16,6 +16,23 @@ export const loader = (async () =>
         return resp.data as Categories;
     })) satisfies LoaderFunction;
 
+const CategoryButton = (props: {category: Category, navigate:NavigateFunction}) => {
+    const { category } = props;
+    const active = useMatch(encodeURI(category.name));
+    return (<Button
+        alignText={Alignment.LEFT}
+        fill
+        minimal
+        active={!!active}
+        onClick={() => {
+            props.navigate(category.name);
+        }}
+        key={category.name}>
+            {category.name} ({category.count})
+            <Link  to={category.name}></Link>
+    </Button>);
+};
+
 export const CategoriesComponent = () => {
     let navigate = useNavigate();
     const categories = useLoaderData() as LoaderData<typeof loader>;
@@ -26,19 +43,7 @@ export const CategoriesComponent = () => {
                 <h1 className='white'>Categories</h1>
                 <div className={Classes.DARK}>
 
-                    {categories.map((category) => (
-                        <Button
-                        alignText={Alignment.LEFT}
-                        fill
-                        minimal
-                        onClick={() => {
-                            navigate(category.name);
-                        }}
-                        key={category.name}>
-                            {category.name} ({category.count})
-                            <Link  to={category.name}></Link>
-                        </Button>
-                    ))}
+                    {categories.map((category) => (<CategoryButton key={category.name} category={category} navigate={navigate} />))}
                 </div>
             </div>
             <Outlet />
