@@ -2,6 +2,8 @@ import express from 'express';
 import {mongoClient} from '../mongo/connection';
 import productsRouter from './productsRouter';
 import productInfoRouter from './productInfoRouter';
+import loginRouter from './loginRouter';
+
 const router = express.Router();
 
 const agg = [
@@ -17,6 +19,7 @@ const agg = [
     }
   }
 ];
+
 router.get('/categories', async (_, res) => {
     const coll = mongoClient.db('ec').collection('products');
     const cursor = coll.aggregate(agg);
@@ -28,7 +31,10 @@ router.use('/products', productsRouter);
 
 router.use('/productInfo', productInfoRouter);
 
-router.use((_, res) => {
+router.use('/login', loginRouter);
+
+router.use((req, res) => {
+  // console.log(req);
     res.status(403).send({
         message: "Not found"
     });

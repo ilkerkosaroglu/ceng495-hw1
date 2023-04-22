@@ -9,13 +9,13 @@ const getUserInfo = () => {
     return null;
 };
 
-const setUserInfo = (userInfo: User) => {
+const setUserInfo = (userInfo: User|null) => {
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
 };
 
-export const useUserStore = create<{user:User|null}>((set) => ({
+export const useUserStore = create<{user:User|null, setUser:(user:User|null)=>void}>((set) => ({
     user: getUserInfo(),
-    setUser: (user:User) => {
+    setUser: (user) => {
         set({ user });
         setUserInfo(user);
     },

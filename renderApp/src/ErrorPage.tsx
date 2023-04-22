@@ -1,7 +1,7 @@
 export const ErrorPage = () => {
   return (
     <div>
-      <h1>404 - Not Found!</h1>
+      <h1>Error! Something went wrong..</h1>
     </div>
   );
 };

@@ -14,7 +14,7 @@ export const Root = () => {
                 <Navbar.Heading  style={{fontSize: "30px"}}>
                     <Link to='/' style={{textDecoration:'none', color:'inherit'}}>ProductSepeti</Link>
                 </Navbar.Heading>
-                {user && <Navbar.Heading style={{fontSize: "30px"}}>Welcome {user.name}</Navbar.Heading>}
+                {user && <Navbar.Heading style={{fontSize: "30px"}}>Welcome {user.username}</Navbar.Heading>}
                 {user ? 
                 <Button intent='primary' onClick={()=>{
                     nav('/dashboard');
