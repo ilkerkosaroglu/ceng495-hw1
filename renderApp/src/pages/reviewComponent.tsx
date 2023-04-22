@@ -1,45 +1,30 @@
-import { LoaderFunction, useLoaderData } from "react-router-dom";
-import { LoaderData } from "../routerTypes";
-import axios from "axios";
-import { ProductProps } from "./productCard";
-interface ProductInfo extends ProductProps {
-    reviews: ReviewProps[];
-};
-type ReviewProps = {
-    username: string;
-    rating: number;
-    comment: string;
-};
+import { Card } from "@blueprintjs/core";
+import { ProductInfo, ReviewProps } from "./productTypes";
+import Rate from 'rc-rate';
+import 'rc-rate/assets/index.css';
 
-export const loader = (async ({ params }) =>{
-    const productInfo = await axios.get(`/api/productInfo/${params.productId}`).catch(()=>{
-        throw new Error('Failed to load product info of ' +params.productId+ ' product');
-    }).then((resp)=>{
-        console.log(resp.data);
-        return resp.data as ProductInfo;
-    });
-    return productInfo;
-}) satisfies LoaderFunction;
-
-export const ReviewPropsComponent = () => {
-    const productInfo = useLoaderData() as LoaderData<typeof loader>;
-    if(!productInfo?.reviews.length) return (<div></div>);
+const ReviewCardComponent = (props:{review: ReviewProps}) => {
+    const {review} = props;
     return (
-        <div>
+        <Card style={{margin:'10px'}}>
+            <h4 style={{margin:'10px 0'}}><b>{review.username}</b></h4>
+            {/* <hr/> */}
+            {review.rating!=null && <Rate value={review.rating}/>}
+            <p style={{marginTop:'5px'}}>{review.comment}</p>
+        </Card>
+    );
+};
+// <EditableReviewComponent product={product}/>
+export const ReviewPropsComponent = (props:{productInfo: ProductInfo}) => {
+    const {productInfo} = props;
+    return (
+        <div style={{textAlign:'initial'}}>
+            {productInfo.reviews.length > 0 ? <>
                 <hr/>
-                <hr/>
+                <h2>Reviews: {productInfo.reviews.length}</h2>
                 {/* <h4>Average Rating: ({props.averageRating})</h4> */}
-                <h4>Reviews: ({productInfo.reviews.length})</h4>
-                {productInfo.reviews.map((review, index) => {
-                    return (
-                        <div key={index}>
-                            <h4><b>{review.username}</b></h4>
-                            <h4><b>{review.rating}</b></h4>
-                            <p>{review.comment}</p>
-                            <hr/>
-                        </div>
-                    );
-                })}
+                {productInfo.reviews.map((review) => <ReviewCardComponent key={review.username} review={review}/>)}
+            </>:<h2>No reviews yet</h2>}
         </div>
     );
 };

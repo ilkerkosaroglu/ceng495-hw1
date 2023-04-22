@@ -1,17 +1,22 @@
 import { Dialog } from "@blueprintjs/core";
-import { ProductProps } from "./productCard";
-import { ProductInfoComponent } from "./productInfo";
-import { Outlet } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useOutlet } from "react-router-dom";
 
-export const ProductDialogComponent = (props:{isOpen:boolean, onClose:()=>void, product:ProductProps}) => {
+declare global {
+    interface Window { setCurrentProduct: (name:string)=>void; currentProduct: string; }
+}
+
+export const ProductDialogComponent = () => {
+    const productDetailed = useOutlet();
+    let isOpen = !!productDetailed;
+    const nav = useNavigate();
+    const [name, setName] = useState(window.currentProduct);
+    window.setCurrentProduct = setName;
     return (
-        <Dialog {...props}
-            title={props.product.name}
+        <Dialog style={{width:'80%', maxWidth:'800px'}} key="productDialogKey" isOpen={isOpen} onClose={()=>{nav("..", {relative:"path"})}}
+            title={name}
         >
-            <div style={{padding:'20px'}}>
-                <ProductInfoComponent product={props.product} noText/>
-            </div>
-            <Outlet/>
+            {productDetailed}
         </Dialog>
     );
 };

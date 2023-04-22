@@ -5,7 +5,7 @@ import { ErrorPage, ErrorProductPage } from './ErrorPage';
 import { ProductsComponent, loader as productsLoader } from './pages/productsPage';
 import { Root, loader as rootLoader } from './Root';
 import { CategoriesComponent, loader as categoriesLoader } from './Categories';
-import { ReviewPropsComponent, loader as productInfoLoader } from './pages/reviewComponent';
+import { ProductDetailedComponent, loader as productInfoLoader } from './pages/productDetailed';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: ":productId",
-                element: <ReviewPropsComponent/>,
+                element: <ProductDetailedComponent/>,
                 loader: productInfoLoader,
               },
             ],

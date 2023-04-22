@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { ProductProps } from "./productCard";
 import { Classes } from "@blueprintjs/core";
 import { capitalizeFirstLetter } from '../util';
+import { ProductProps } from "./productTypes";
 
-const knownProps = ['_id', 'category', 'name', 'description', 'price', 'image', 'seller'];
+const knownProps = ['_id', 'category', 'name', 'description', 'price', 'image', 'seller', 'reviews'];
 
 const shouldRenderExtraProps = (obj: Object) => {
     return Object.keys(obj).some(key => !knownProps.includes(key));

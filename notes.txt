@@ -1,6 +1,10 @@
 ts+node for server: https://khalilstemmler.com/blogs/typescript/node-starter-project/
 
 
+butona basınca boş review render et, ordan update attır. key aynı olursa renderlar.
+eğer user'ın ratingi o item'da varsa en üste koy, text edit olsun rating interactive olsun.
+Eğer rating 
+
 param routing. url'de param olsun, kategoriler için.
 
 proper authorization? proper nasıl oluyor
