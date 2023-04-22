@@ -6,6 +6,7 @@ import { ProductsComponent, loader as productsLoader } from './pages/productsPag
 import { Root, loader as rootLoader } from './Root';
 import { CategoriesComponent, loader as categoriesLoader } from './Categories';
 import { ProductDetailedComponent, loader as productInfoLoader } from './pages/productDetailed';
+import { LoginPage } from './pages/login/loginPage';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,8 @@ const router = createBrowserRouter([
     loader: rootLoader,
     errorElement: <ErrorPage />,
     children: [
+      { path: "/login", element: <LoginPage />, action: (e) => { console.log("login page action"); }, errorElement: <ErrorPage /> },
+      { path: "/dashboard", element: <div>Dashboard Page</div> },
       { path: "/", 
         element: <CategoriesComponent />, 
         loader: categoriesLoader, 

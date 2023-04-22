@@ -74,3 +74,11 @@
 .darkLink:visited{
   color: #61dafb;
 }
+
+.m{
+  margin: 8px;
+}
+
+.p{
+  padding: 8px;
+}
