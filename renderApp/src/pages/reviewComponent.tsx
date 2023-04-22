@@ -5,12 +5,14 @@ import 'rc-rate/assets/index.css';
 
 const ReviewCardComponent = (props:{review: ReviewProps}) => {
     const {review} = props;
+    // shouldn't be possible to have a review without a rating or comment, but just in case
+    if(review.rating==null && review.comment==null) return (<></>);
     return (
         <Card style={{margin:'10px'}}>
             <h4 style={{margin:'10px 0'}}><b>{review.username}</b></h4>
             {/* <hr/> */}
             {review.rating!=null && <Rate value={review.rating}/>}
-            <p style={{marginTop:'5px'}}>{review.comment}</p>
+            {review.comment!=null && <p style={{marginTop:'5px'}}>{review.comment}</p>}
         </Card>
     );
 };
