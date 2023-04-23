@@ -1,11 +1,13 @@
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { useUserStore } from "../../state/userStore";
-import { H3, H4 } from "@blueprintjs/core";
+import { H3 } from "@blueprintjs/core";
 import { ReviewCardComponent } from "../reviewComponent";
 import { LoaderData } from "../../routerTypes";
 import axios from "axios";
 import { ReviewProps } from "../productTypes";
 import { round10 } from "../../util";
+import { AdminDashboard } from "./adminDashboard";
+import { User } from "../../state";
 
 type UserReviews = {
     avgRating:number,
@@ -17,15 +19,28 @@ export const loader = async ()=>{
     if (!user) {
       throw redirect("/login");
     }
-    const {data: userReviews} = await axios.post(`/api/userReviews`, {userId: user._id}).catch(()=>{
+    const {data:userReviews}:{data:UserReviews} = await axios.post(`/api/userReviews`, {userId: user._id}).catch(()=>{
         throw new Error('Failed to load user reviews of ' +user.username);
     });
-    return userReviews as UserReviews;
+
+    if(!user.isAdmin){
+        return {userReviews};
+    }
+
+    // user is admin
+
+    const {data: allUsers}:{data:User[]} = await axios.get("/api/allUsers").catch(()=>{
+        throw new Error('Failed to load all users.');
+    });
+
+    return {userReviews, allUsers};
 }
+
 export const DashboardComponent = ()=>{
-    const {user} = useUserStore();
+    const user = useUserStore(s=>s.user);
     const nav = useNavigate();
-    const {avgRating, reviews} = useLoaderData() as LoaderData<typeof loader>;
+    // const act = useAction
+    const {userReviews:{avgRating, reviews}, allUsers} = useLoaderData() as LoaderData<typeof loader>;
     if(avgRating===undefined || reviews===undefined) return null;
     return(
         <div style={{width:'80%', maxWidth:'800px', display:'inline-block', padding:'50px'}}>
@@ -43,11 +58,9 @@ export const DashboardComponent = ()=>{
             </div>:
                 <H3>You haven't reviewed anything yet.</H3>
             }
-            <div style={{margin:'50px 100px'}}>
-                {user?.isAdmin && <div>
-                    <H4> Admin Dashboard </H4>
-                    </div>}
-            </div>
+            {user?.isAdmin && allUsers &&
+                <AdminDashboard allUsers={allUsers}/>
+            }
         </div>
     );
 }

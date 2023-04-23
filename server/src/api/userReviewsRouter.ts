@@ -1,68 +1,9 @@
 import express from 'express';
 import { mongoClient } from '../mongo/connection';
 import { ObjectId } from 'mongodb';
+
 const router = express.Router();
-const agg1 = (id: string) => [
-  {
-    $match:
-    {
-      _id: new ObjectId(id),
-    },
-  },
-  {
-    $unwind:
-    {
-      path: "$reviews",
-      preserveNullAndEmptyArrays: false,
-    },
-  },
-  {
-    $lookup:
-    {
-      from: "products",
-      localField: "reviews.to",
-      foreignField: "_id",
-      as: "reviewedProductNames",
-      pipeline: [
-        {
-          $project: {
-            name: 1,
-            category: 1
-          },
-        },
-      ],
-    },
-  },
-  {
-    $addFields:
-    {
-      reviews: {
-        productName: {
-          $first: "$reviewedProductNames.name",
-        },
-        category: {
-          $first: "$reviewedProductNames.category",
-        },
-      },
-    },
-  },
-  {
-    $unset:
-      "reviewedProductNames",
-  },
-  {
-    $group:
-    {
-      _id: null,
-      avgRating: {
-        $avg: "$reviews.rating",
-      },
-      reviews: {
-        $push: "$reviews",
-      },
-    },
-  }
-]
+
 const agg = (id: string) => [
   { $match: { _id: new ObjectId(id) } },
   {

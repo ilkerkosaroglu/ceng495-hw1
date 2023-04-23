@@ -1,5 +1,6 @@
 ts+node for server: https://khalilstemmler.com/blogs/typescript/node-starter-project/
 
+auth: https://www.loginradius.com/blog/engineering/guest-post/nodejs-authentication-guide/
 
 butona basınca boş review render et, ordan update attır. key aynı olursa renderlar.
 eğer user'ın ratingi o item'da varsa en üste koy, text edit olsun rating interactive olsun.

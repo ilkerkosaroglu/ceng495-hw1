@@ -22,8 +22,6 @@ export const ProductsComponent = () => {
                 {products.map((product) => (
                     <>
                     <CardComponent key={product.name} {...product} />
-                    <CardComponent key={product.name+"1"} {...product} />
-                    <CardComponent key={product.name+"2"} {...product} />
                     </>
                 ))}
                 <ProductDialogComponent/>

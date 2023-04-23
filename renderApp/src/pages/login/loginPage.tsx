@@ -7,7 +7,7 @@ import { useUserStore } from "../../state/userStore";
 
 export const loader = ()=>{
     const {user} = useUserStore.getState()
-    if(user){
+    if(user && !user.isAdmin){
         throw redirect("/dashboard");
     }
     return 1;
@@ -32,6 +32,7 @@ export const action = (async ({ request })=>{
                     message: "Sign up successful: "+user.username,
                     intent:'success'
                 });
+                return redirect("/login");
             }
         }catch(e:any){
             showNotification({
@@ -49,6 +50,7 @@ export const action = (async ({ request })=>{
       }) satisfies ActionFunction;
 
 export const LoginPage = () => {
+    const user = useUserStore(s=>s.user);
     return (
         <div style={{width: '100vw'}}>
             <h1>Login Page</h1>
@@ -62,7 +64,9 @@ export const LoginPage = () => {
                     <InputGroup className="m" round leftIcon="lock" type="password" id="p-input" name="password"
                     placeholder="Password"/>
                     <Button className="m p" style={{borderRadius:'8px'}} type="submit" name="log" intent="primary">Log in</Button>
-                    <Button className="m p" style={{borderRadius:'8px'}} type="submit" name="sign" intent="primary">Sign up</Button>
+                    {user?.isAdmin &&
+                        <Button className="m p" style={{borderRadius:'8px'}} type="submit" name="sign" intent="primary">Create user</Button>
+                    }
                 </FormGroup>
                 </Form>
             </div>
