@@ -68,7 +68,7 @@ const agg = (id: string) => [
   {
     $unwind: {
       path: "$reviews",
-      preserveNullAndEmptyArrays: false,
+      preserveNullAndEmptyArrays: true,
     }
   },
   {
@@ -97,7 +97,7 @@ const agg = (id: string) => [
   {
     $unwind: {
       path: "$reviews",
-      preserveNullAndEmptyArrays: false,
+      preserveNullAndEmptyArrays: true,
     }
   },
   {

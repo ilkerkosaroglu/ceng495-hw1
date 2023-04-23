@@ -26,7 +26,7 @@ export const DashboardComponent = ()=>{
     const {user} = useUserStore();
     const nav = useNavigate();
     const {avgRating, reviews} = useLoaderData() as LoaderData<typeof loader>;
-    if(!avgRating || !reviews) return null;
+    if(avgRating===undefined || reviews===undefined) return null;
     return(
         <div style={{width:'80%', maxWidth:'800px', display:'inline-block', padding:'50px'}}>
 

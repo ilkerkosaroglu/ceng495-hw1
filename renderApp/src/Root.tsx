@@ -10,7 +10,7 @@ export const Root = () => {
     const nav = useNavigate();
     return (
         <div style={{height: '100%'}}>
-            <Navbar>
+            <Navbar fixedToTop>
                 <Navbar.Group style={{width:'100%', justifyContent:'space-between'}} align={Alignment.LEFT}>
                 <Navbar.Heading  style={{fontSize: "30px"}}>
                     <Link to='/' style={{textDecoration:'none', color:'inherit'}}>ProductSepeti</Link>

@@ -38,7 +38,7 @@ export const CategoriesComponent = () => {
     const categories = useLoaderData() as LoaderData<typeof loader>;
     if(!categories) return (<div>Loading...</div>);
     return (
-        <div style={{display:'flex', height:'100%'}}>
+        <div style={{display:'flex', minHeight:'calc(100vh - 50px)'}}>
             <div style={{backgroundColor:'#2e2e3c', padding:'0px 22px',borderRight:'gray solid 1px', textAlign:'initial', whiteSpace: 'nowrap'}}>
                 <h1 className='white'>Categories</h1>
                 <div className={Classes.DARK}>
