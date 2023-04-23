@@ -5,6 +5,14 @@ import { showNotification } from "../../util";
 import { User } from "../../state";
 import { useUserStore } from "../../state/userStore";
 
+export const loader = ()=>{
+    const {user} = useUserStore.getState()
+    if(user){
+        throw redirect("/dashboard");
+    }
+    return 1;
+}
+
 export const action = (async ({ request })=>{
         const data = await request.formData();
         const username = data.get("username");

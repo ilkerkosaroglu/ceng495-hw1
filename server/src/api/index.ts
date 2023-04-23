@@ -3,6 +3,7 @@ import {mongoClient} from '../mongo/connection';
 import productsRouter from './productsRouter';
 import productInfoRouter from './productInfoRouter';
 import loginRouter from './loginRouter';
+import userReviewsRouter from './userReviewsRouter';
 
 const router = express.Router();
 
@@ -32,6 +33,8 @@ router.use('/products', productsRouter);
 router.use('/productInfo', productInfoRouter);
 
 router.use('/login', loginRouter);
+
+router.use('/userReviews', userReviewsRouter);
 
 router.use((req, res) => {
   // console.log(req);

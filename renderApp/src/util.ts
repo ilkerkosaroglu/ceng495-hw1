@@ -8,3 +8,5 @@ export const capitalizeFirstLetter = (str: string) => {
 
 const toaster = Toaster.create();
 export const showNotification = toaster.show.bind(toaster);
+
+export const round10 = (n:number) => Math.round(n*10)/10;

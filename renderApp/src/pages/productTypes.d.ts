@@ -13,7 +13,10 @@ export interface ProductInfo extends ProductProps {
 };
 
 export type ReviewProps = {
-    username: string;
+    username?: string; // user _id
+    to?: string, // product _id, only applies to dashboard
+    productName?: string; // only applies to dashboard
+    category?: string; // only applies to dashboard
     rating: number;
     comment: string;
 };

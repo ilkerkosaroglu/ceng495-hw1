@@ -18,7 +18,7 @@ export const Root = () => {
                 {user && <Navbar.Heading style={{fontSize: "30px"}}>Welcome {user.username}</Navbar.Heading>}
                 <Navbar.Group>
 
-                {user?.isAdmin && 
+                {user && 
                 <Button style={{marginRight:'5px'}} intent='primary' onClick={()=>{
                     nav('/dashboard');
                 }}>Dashboard</Button>}
