@@ -4,19 +4,31 @@ import Rate from 'rc-rate';
 import 'rc-rate/assets/index.css';
 import { useUserStore } from "../state/userStore";
 import { round10 } from "../util";
+import { useEffect } from "react";
+import { useSelfReview } from "./reviewAddComponent";
 
-export const ReviewCardComponent = (props:{review: ReviewProps, onClick?:()=>void}) => {
+export const ReviewCardComponent = (props:{review: ReviewProps, shouldRenderSelfReview?:boolean, onClick?:()=>void}) => {
     const {review} = props;
     const user = useUserStore((s)=>s.user);
 
-    // shouldn't be possible to have a review without a rating or comment, but just in case
-    if(review.rating==null && review.comment==null) return null;
+    const selfComment = user?.username === review.username;
 
-    // user's own rating is handled in a separate place
-    if(user?.username === review.username) return null;
+    const badCondition = review.rating==null && review.comment==null;
+
+    useEffect(()=>{
+        if(selfComment && !badCondition){
+            useSelfReview.setState({selfReview: review});
+        }
+    }, [selfComment, review, badCondition]);
+
+    // shouldn't be possible to have a review without a rating or comment, but just in case
+    if(badCondition) return null;
     
+    // user's own rating is handled in a separate place
+    // if(!props.shouldRenderSelfReview && selfComment) return null;
+
     return (
-        <Card style={{margin:'10px'}} onClick={props.onClick} interactive={!!props.onClick}>
+        <Card style={{margin:'10px', border:(selfComment?'blue solid 1px':'')}} onClick={props.onClick} interactive={!!props.onClick}>
             <h4 style={{margin:'10px 0'}}><b>{review.username}</b></h4>
             <h4 style={{margin:'10px 0'}}><b>{review.productName}</b></h4>
             {/* <hr/> */}

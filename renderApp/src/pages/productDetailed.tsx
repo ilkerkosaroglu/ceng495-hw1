@@ -6,6 +6,8 @@ import { LoaderData } from "../routerTypes";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { ProductInfo } from "./productTypes";
 import { useEffect, useState } from "react";
+import { ReviewAddComponent } from "./reviewAddComponent";
+import { useUserStore } from "../state/userStore";
 
 export const loader = (async ({ params }) =>{
     const productInfo = await axios.get(`/api/productInfo/${params.productId}`).catch(()=>{
@@ -19,6 +21,7 @@ export const loader = (async ({ params }) =>{
 
 export const ProductDetailedComponent = () => {
     const productInfoCurrent = useLoaderData() as LoaderData<typeof loader>;
+    const user = useUserStore(s=>s.user);
 
     // to prevent flickering on close
     let [product, setLastProductInfo] = useState<ProductInfo | null>(productInfoCurrent);
@@ -33,6 +36,7 @@ export const ProductDetailedComponent = () => {
     return(
         <div style={{padding:'20px', textAlign:'center'}}>
             <ProductInfoComponent product={product} noText/>
+            {user?._id&&<ReviewAddComponent product={product}/>}
             <ReviewPropsComponent productInfo={product}/>
         </div>
     );

@@ -28,6 +28,7 @@ const agg = (id:string)=>[
           {
             $project: {
               username: 1,
+              to: "$reviews.to",
               rating: "$reviews.rating",
               comment: "$reviews.comment",
             },

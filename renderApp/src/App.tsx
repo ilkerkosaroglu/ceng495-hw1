@@ -10,7 +10,7 @@ import { LoginPage, loader as loginLoader, action as loginAction } from './pages
 import { DashboardComponent, loader as dashboardLoader } from './pages/login/dashboard';
 import { action as userAction } from './pages/login/adminDashboard';
 import { ProductCreationComponent, loader as newProductLoader, action as newProductAction } from './pages/login/productCreation';
-
+import { action as reviewAddAction } from './pages/reviewAddComponent';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +22,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage />, loader: loginLoader, action: loginAction, errorElement: <ErrorPage /> },
       { path: "/dashboard", element: <DashboardComponent/>, loader: dashboardLoader },
       { path: "/newProduct", element: <ProductCreationComponent/>, loader: newProductLoader, action: newProductAction },
+      { path: "/review/:productId/edit", action: reviewAddAction },
       { path: "/", 
         element: <CategoriesComponent />, 
         loader: categoriesLoader, 

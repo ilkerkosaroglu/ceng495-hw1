@@ -9,4 +9,7 @@ router.get('/:category', async (req, res) => {
     return res.send(result);
 });
 
+router.delete('/:productId', async (req, res) => {});
+router.post('/new', async (req, res) => {});
+
 export default router;

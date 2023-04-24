@@ -1,10 +1,8 @@
 import { Button, Classes, FormGroup, H5, InputGroup, MenuItem, NumericInput } from "@blueprintjs/core";
-import { Suggest, Suggest2 } from "@blueprintjs/select";
-import axios from "axios";
+import { Suggest } from "@blueprintjs/select";
 import { ActionFunction, Form, LoaderFunction, redirect, useSubmit } from "react-router-dom";
 import { useState } from "react";
 import { useExtraProps } from "./productExtraStore";
-import { MenuItem2 } from "@blueprintjs/popover2";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import { useUserStore } from "../../state/userStore";
 

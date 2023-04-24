@@ -5,6 +5,7 @@ import productInfoRouter from './productInfoRouter';
 import loginRouter from './loginRouter';
 import userReviewsRouter from './userReviewsRouter';
 import userRouter from './userRouter';
+import reviewRouter from './reviewRouter';
 
 const router = express.Router();
 
@@ -46,8 +47,9 @@ router.use('/userReviews', userReviewsRouter);
 
 router.use('/user', userRouter);
 
+router.use('/review', reviewRouter);
+
 router.use((req, res) => {
-  // console.log(req);
     res.status(403).send({
         message: "Not found"
     });

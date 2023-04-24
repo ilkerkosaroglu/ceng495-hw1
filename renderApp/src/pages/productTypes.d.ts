@@ -14,7 +14,7 @@ export interface ProductInfo extends ProductProps {
 
 export type ReviewProps = {
     username?: string; // user _id
-    to?: string, // product _id, only applies to dashboard
+    to: string, // product _id
     productName?: string; // only applies to dashboard
     category?: string; // only applies to dashboard
     rating: number;
