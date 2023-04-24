@@ -20,7 +20,8 @@ app.get("/", (req, res) => {
 
 app.use('/api', api);
 
-const port = 80;
+// Render port.
+const port = 3001;
 app.set('port', port);
 
 const server = http.createServer(app);
