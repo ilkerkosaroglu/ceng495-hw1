@@ -1,5 +1,6 @@
 import express from 'express';
 import {mongoClient} from '../mongo/connection';
+import { ObjectId } from 'mongodb';
 const router = express.Router();
 
 router.get('/:category', async (req, res) => {
@@ -9,7 +10,17 @@ router.get('/:category', async (req, res) => {
     return res.send(result);
 });
 
-router.delete('/:productId', async (req, res) => {});
-router.post('/new', async (req, res) => {});
+router.delete('/:productId', async (req, res) => {
+    console.log("del:", req.body);
+    const coll = mongoClient.db('ec').collection('products');
+    coll.deleteOne({_id: new ObjectId(req.params.productId)});
+});
+router.put('/new', async (req, res) => {
+    console.log("new:", req.body);
+    const coll = mongoClient.db('ec').collection('products');
+    const data = {...req.body, price: Number(req.body.price)};
+    await coll.insertOne(data);
+    return res.status(200).send();
+});
 
 export default router;

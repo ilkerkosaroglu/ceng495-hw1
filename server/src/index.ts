@@ -14,11 +14,12 @@ app.use(express.json());
 //static files for frontend
 const stPath = path.join(__dirname, '..', '..', "renderApp", "build");
 app.use(express.static(stPath));
-app.get("/", (req, res) => {
-    res.sendFile(path.join(stPath, "index.html"));
-});
 
 app.use('/api', api);
+
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(stPath, "index.html"));
+});
 
 // Render port.
 const port = 3001;

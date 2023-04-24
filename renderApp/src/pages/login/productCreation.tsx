@@ -1,10 +1,12 @@
 import { Button, Classes, FormGroup, H5, InputGroup, MenuItem, NumericInput } from "@blueprintjs/core";
 import { Suggest } from "@blueprintjs/select";
-import { ActionFunction, Form, LoaderFunction, redirect, useSubmit } from "react-router-dom";
+import { ActionFunction, Form, LoaderFunction, redirect, useNavigate, useSubmit } from "react-router-dom";
 import { useState } from "react";
 import { useExtraProps } from "./productExtraStore";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import { useUserStore } from "../../state/userStore";
+import { showNotification } from "../../util";
+import axios from "axios";
 
 export const loader = (async () => {
     const {user} = useUserStore.getState();
@@ -16,16 +18,16 @@ export const loader = (async () => {
     return 1;
 }) satisfies LoaderFunction;
 
-export const action = (async ({ request })=>{
-    const data = await request.formData();
-    data.get("productData");
-    // await axios.delete(`/api/user/${userId}`).catch(e=>{
-    //     console.error("error on user deletion:", e);
-    // });
-    return redirect("/newProduct");
-}) satisfies ActionFunction;
+// export const action = (async ({ request })=>{
+//     const data = await request.formData();
+//     data.get("productData");
+//     // await axios.delete(`/api/user/${userId}`).catch(e=>{
+//     //     console.error("error on user deletion:", e);
+//     // });
+//     return redirect("/newProduct");
+// }) satisfies ActionFunction;
 
-const Suggester = (props:{extraProps:string[], setExtraProps:(items:string[])=>void, picked:(str:string)=>void,[p:string]:any})=>{
+const Suggester = (props:{extraProps:string[], setExtraProps:(items:string[])=>void, change:(s:string)=>void, picked:(str:string)=>void,[p:string]:any})=>{
     const {extraProps, setExtraProps} = props;
     return (
                     <Suggest {...props} items = {extraProps} 
@@ -61,6 +63,7 @@ const Suggester = (props:{extraProps:string[], setExtraProps:(items:string[])=>v
                         return item;
                     }}
                     createNewItemFromQuery={(query)=>{
+                        props.change(query);
                         return query;
                     }} 
                     onItemSelect={props.picked}
@@ -71,16 +74,43 @@ const Suggester = (props:{extraProps:string[], setExtraProps:(items:string[])=>v
 export const ProductCreationComponent = ()=>{
     const [url, setUrl] = useState('');
     const {categories, setCategories} = useExtraProps();
-    const submit = useSubmit();
+    // const submit = useSubmit();
+    const [cat, setCat] = useState('');
     return (
             <div style={{margin:'50px 100px'}}>
-                <Form action="/newProduct" method="post"
+                <Form action="/products" method="post"
                     style={{display:'flex', justifyContent:'center'}}
-                    onSubmit={(e)=>{
+                    onSubmit={async (e:any)=>{
                         //add extra props
                         e.preventDefault();
-                        const data = new FormData();
-                        submit(data, {method:'put', action:'/newProduct'});
+                        // console.log(e);
+                        // console.log(e.target[0]);
+                        const data = {
+                            name: e.target[0].value,
+                            description: e.target[1].value,
+                            price: e.target[2].value,
+                            seller: e.target[5].value,
+                            image: e.target[6].value,
+                            category: e.target[7].value,
+                            colour: e.target[8].value,
+                            size: e.target[9].value,
+                            spec: {[e.target[10].value]: e.target[11].value},
+                        };
+                        const p = window.location.pathname; 
+                        await axios.put('/api/products/new', data).then((resp)=>{
+                            showNotification({
+                                intent:'success',
+                                message:'Product created successfully!'
+                            });
+                        }).catch((e)=>{
+                            showNotification({
+                                intent:'danger',
+                                message:'Product creation failed!'
+                            });
+                        });
+                        // submit(data, {method:'put', action:'/api/products/new'});
+                        // nav(p);
+                        redirect(p);
                     }}
                 >
                 <FormGroup label="Create new item:">
@@ -112,8 +142,9 @@ export const ProductCreationComponent = ()=>{
 
 
                     <H5>Category:</H5>
-                    <Suggester round className="m" extraProps={categories} setExtraProps={setCategories} picked={(str)=>{
+                    <Suggester round className="m" extraProps={categories} change={setCat} setExtraProps={setCategories} picked={(str)=>{
                         console.log("picked:", str);
+                        setCat(str);
                     }}/>
                     <H5 className="m">Extra properties:</H5>
                     <InputGroup className="m" round name="colour" id="colour-input"

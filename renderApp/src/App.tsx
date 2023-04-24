@@ -9,7 +9,7 @@ import { ProductDetailedComponent, loader as productInfoLoader } from './pages/p
 import { LoginPage, loader as loginLoader, action as loginAction } from './pages/login/loginPage';
 import { DashboardComponent, loader as dashboardLoader } from './pages/login/dashboard';
 import { action as userAction } from './pages/login/adminDashboard';
-import { ProductCreationComponent, loader as newProductLoader, action as newProductAction } from './pages/login/productCreation';
+import { ProductCreationComponent, loader as newProductLoader } from './pages/login/productCreation';
 import { action as reviewAddAction } from './pages/reviewAddComponent';
 const router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       { path: "/user", action: userAction},
       { path: "/login", element: <LoginPage />, loader: loginLoader, action: loginAction, errorElement: <ErrorPage /> },
       { path: "/dashboard", element: <DashboardComponent/>, loader: dashboardLoader },
-      { path: "/newProduct", element: <ProductCreationComponent/>, loader: newProductLoader, action: newProductAction },
+      { path: "/newProduct", element: <ProductCreationComponent/>, loader: newProductLoader },
       { path: "/review/:productId/edit", action: reviewAddAction },
       { path: "/", 
         element: <CategoriesComponent />, 
