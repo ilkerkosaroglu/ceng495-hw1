@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { ErrorPage, ErrorProductPage } from './ErrorPage';
@@ -9,6 +9,7 @@ import { ProductDetailedComponent, loader as productInfoLoader } from './pages/p
 import { LoginPage, loader as loginLoader, action as loginAction } from './pages/login/loginPage';
 import { DashboardComponent, loader as dashboardLoader } from './pages/login/dashboard';
 import { action as userAction } from './pages/login/adminDashboard';
+import { ProductCreationComponent, loader as newProductLoader, action as newProductAction } from './pages/login/productCreation';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "/user", action: userAction},
       { path: "/login", element: <LoginPage />, loader: loginLoader, action: loginAction, errorElement: <ErrorPage /> },
       { path: "/dashboard", element: <DashboardComponent/>, loader: dashboardLoader },
+      { path: "/newProduct", element: <ProductCreationComponent/>, loader: newProductLoader, action: newProductAction },
       { path: "/", 
         element: <CategoriesComponent />, 
         loader: categoriesLoader, 
@@ -45,6 +47,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  useEffect(()=>{
+     document.title = 'ProductSepeti';
+  }, []);
   return (
     <div className="App">
       <React.StrictMode>

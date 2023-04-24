@@ -37,8 +37,11 @@ export const AdminDashboard = (props:{allUsers: User[]})=>{
                         }></Button>
                          </Card>
                     )}
-                    <H5>Create new users here: <Button onClick={()=>{
+                    <H5>Create new users here: <Button icon="mugshot" onClick={()=>{
                         nav("/login");
+                    }}></Button></H5>
+                    <H5>Create new products here: <Button icon="barcode" onClick={()=>{
+                        nav("/newProduct");
                     }}></Button></H5>
             </div>
     );

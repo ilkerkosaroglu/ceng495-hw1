@@ -3,6 +3,7 @@ import { useLoaderData, LoaderFunction, Link, Outlet, useNavigate, NavigateFunct
 import { LoaderData } from './routerTypes';
 import axios from 'axios';
 import { Alignment, Button, Classes } from '@blueprintjs/core';
+import { useExtraProps } from './pages/login/productExtraStore';
 type Category = {
     name: string;
     count: number;
@@ -13,7 +14,14 @@ export const loader = (async () =>
     axios.get('/api/categories').catch(()=>{
         throw new Error('Failed to load categories');
     }).then((resp)=>{
-        return resp.data as Categories;
+        const categoriesRes = resp.data as Categories;
+        const {categories} = useExtraProps.getState();
+        categoriesRes.forEach((category)=>{
+            if(!categories.includes(category.name)){
+                useExtraProps.setState({categories:[...categories, category.name]});
+            }
+        });
+        return categoriesRes;
     })) satisfies LoaderFunction;
 
 const CategoryButton = (props: {category: Category, navigate:NavigateFunction}) => {

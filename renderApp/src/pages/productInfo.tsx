@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Classes } from "@blueprintjs/core";
+import { Card, Classes } from "@blueprintjs/core";
 import { capitalizeFirstLetter } from '../util';
 import { ProductProps } from "./productTypes";
 
-const knownProps = ['_id', 'category', 'name', 'description', 'price', 'image', 'seller', 'reviews'];
+const knownProps = ['_id', 'category', 'name', 'description', 'price', 'image', 'seller', 'reviews', 'avgRating'];
 
 const shouldRenderExtraProps = (obj: Object) => {
     return Object.keys(obj).some(key => !knownProps.includes(key));
@@ -14,7 +14,10 @@ const PropsComponent = (obj: Object) => {
         <div>
             {Object.entries(obj).map(([key, v]) => {
                 if(knownProps.includes(key)) return null;
-                if(typeof v === 'object' && v !== null) return <PropsComponent key={key} {...v} />;
+                if(typeof v === 'object' && v !== null) return <Card key={key}>
+                    <p key={key}>{capitalizeFirstLetter(key)}:</p>
+                    <PropsComponent key={key} {...v} />
+                </Card>;
                 return <p key={key}>{capitalizeFirstLetter(key)}: {v}</p>;
             })}
         </div>
