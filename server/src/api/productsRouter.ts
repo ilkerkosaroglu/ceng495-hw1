@@ -18,7 +18,8 @@ router.delete('/:productId', async (req, res) => {
 router.put('/new', async (req, res) => {
     console.log("new:", req.body);
     const coll = mongoClient.db('ec').collection('products');
-    const data = {...req.body, price: Number(req.body.price)};
+    let data = {...req.body, price: Number(req.body.price)};
+    data = Object.fromEntries(Object.entries(data).filter(([_,v])=>v!==null));
     await coll.insertOne(data);
     return res.status(200).send();
 });
